@@ -34,8 +34,4 @@ nav li:has(~ li:hover)
 
 And that's it !
 
-<p class="codepen" data-height="300" data-theme-id="dark" data-default-tab="css,result" data-slug-hash="RwYWqbw" data-preview="true" data-user="brtheo" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
-  <span>See the Pen <a href="https://codepen.io/brtheo/pen/RwYWqbw">
-  :has() nav menu</a> by theo (<a href="https://codepen.io/brtheo">@brtheo</a>)
-  on <a href="https://codepen.io">CodePen</a>.</span>
-</p>
+<div class="cp_embed_wrapper"><iframe allowfullscreen="true" allowpaymentrequest="true" allowtransparency="true" class="cp_embed_iframe " frameborder="0" height="300" width="100%" name="cp_embed_1" scrolling="no" src="https://codepen.io/brtheo/embed/RwYWqbw?height=300&amp;theme-id=dark&amp;default-tab=css%2Cresult&amp;slug-hash=RwYWqbw&amp;user=brtheo&amp;name=cp_embed_1" style="width: 100%; overflow:hidden; display:block;" title="CodePen Embed" loading="lazy" id="cp_embed_RwYWqbw"></iframe></div>
