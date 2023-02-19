@@ -34,43 +34,8 @@ nav li:has(~ li:hover)
 
 And that's it !
 
-<section>
-<div class="codepen" data-height="300" data-theme-id="dark" data-default-tab="css,result" data-slug-hash="RwYWqbw" data-user="brtheo"  data-prefill='{"title":":has() nav menu","tags":[],"scripts":[],"stylesheets":[]}'>
-  <pre data-lang="html">&lt;nav>
-  &lt;ul>
-    &lt;li>Super&lt;/li>
-    &lt;li>Cool&lt;/li>
-    &lt;li>Effect&lt;/li>
-    &lt;li>With&lt;/li>
-    &lt;li>:has()&lt;/li>
-  &lt;/ul>
-&lt;/nav></pre>
-  <pre data-lang="css">:root {
-  background: black;
-  color: white;
-  font-family: Sans-Serif;
-  font-size: 1.5rem;
-}
-body {
-  display: grid;
-  place-content: center;
-  min-height: 200px;
-}
-nav li {
-  transition: translate 0.42s ease, scale 0.42s ease;
-}
-nav li:hover {
-  translate: 2rem 0;
-  scale: 1.2;
-}
-nav li:has(~ li:hover) {
-  translate: 0 -10vh;
-  scale: 0.9;
-}
-nav li:hover ~ li {
-  translate: 0 10vh;
-  scale: 0.9;
-}
-</pre></div>
-<script async src="https://cpwebassets.codepen.io/assets/embed/ei.js"></script>
-</section>
+<p class="codepen" data-height="300" data-theme-id="dark" data-default-tab="css,result" data-slug-hash="RwYWqbw" data-user="brtheo" style="height: 300px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border: 2px solid; margin: 1em 0; padding: 1em;">
+  <span>See the Pen <a href="https://codepen.io/brtheo/pen/RwYWqbw">
+  :has() nav menu</a> by theo (<a href="https://codepen.io/brtheo">@brtheo</a>)
+  on <a href="https://codepen.io">CodePen</a>.</span>
+</p>
