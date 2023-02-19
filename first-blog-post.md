@@ -1,5 +1,5 @@
-## New css `:has()` pseudo-classe, a concrete use case
-As demonstrated on this wabsite's nav menu, we can do achieve a very cool hover effect by using only few lines of css with the new `:has()`` pseudo-classe.
+## New css `:has()` pseudo-class, a concrete use case
+As demonstrated on this wabsite's nav menu, we can do achieve a very cool hover effect by using only few lines of css with the new `:has()` pseudo-classe.
 
 ```css
 nav li:has(~ li:hover) {}
