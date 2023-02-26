@@ -6,3 +6,14 @@ There's several ways of creating a blog nowadays, whether it is with a legacy CM
 Bref, there're plenty of solutions.
 
 ## Why not build it ourselves ?
+I know right, I had the same idea 🤓
+
+I wanted a solution that would be CMS-like, with automatic time tracking of blog post creation/edition possibility of several authors and easy content management.
+
+When describing like this, it does sound familliar right ? <br>
+*Excatly*, I'm basically describing **Git** and **Github**.
+
+So, now that's it's clearer in our head let's summarize what we are going to do :
+- Use Deno + Fresh
+- Use the Github API
+- Implements type safety
