@@ -30,11 +30,59 @@ Then let's create a new repo, I simply named it `blog`. Create a basic `.md` fil
 
 After, creating a new project with this command
 ```bash
-deno run -A -r https://fresh.deno.dev github-blog
+$ deno run -A -r https://fresh.deno.dev github-blog
 ```
 We're left with this folder structure
 ```bash
+.
+├── README.md
+├── components/
+├── deno.json
+├── deno.lock
+├── dev.ts
+├── fresh.gen.ts
+├── import_map.json
+├── islands/
+├── main.ts
+├── routes/
+│   └── index.tsx
+├── static
+│   └── favicon.ico
+└── twind.config.ts
 ```
+
+To start off, let's create a new folder `utils` at the root directory of our project and create a new file that will hold the logics of fetching our blogposts, I came with the funny name of `octoblog.ts`.
+
+First thing we are gonna do is to create the `Headers` object that we'll reuse for all our requests. We need it to of course authenticate our requests.
+```typescript
+const headers = new Headers();
+headers.append('Authorization', `token <TOKEN>`);
+headers.append('Accept','application/vnd.github+json');
+```
+That probably won't be a good idea to inline your private access token right here in the code, rather add it to you env variable and access it through `Deno.env.get(key: string)`.
+
+Then let's create a fetch wrapper so that it's all safely typed.
+> Remember, all of this is executed on server side in fresh
+```ts
+export class Octoblog {
+  private static get<T extends Endpoint>(endpoint: T): Promise<ResponseType<T>> {
+    const data = await fetch(endpoint, {
+      headers, method: 'GET'
+    });
+    return await data.json();
+  }
+}
+```
+
+Ok, the idea here is simple : we will define the `Endpoint` type and based on which endpoints we queried, we will receive a proper `ResponseType`.
+
+We will need to hit 3 different endpoints for this : 
+`/contents`
+: kk
+`/commits`
+: ll
+`/git/trees`
+: ll
 
 
 
