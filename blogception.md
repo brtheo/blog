@@ -1,5 +1,9 @@
----toml
-tags = ['deno','github','api','typescript']
+---
+tags
+  - deno
+  - github
+  - api
+  - typescript
 ---
 There's several ways of creating a blog nowadays, whether it is with a legacy CMS such as [Wordpress](https://wordpress.com) whether it is by taking a more modern approach using a headless CMS solution like [Strapi](https://strapi.io) or even building it with [Astro](https://astro.build) through their brand new feature [Content Collections](https://docs.astro.build/en/guides/content-collections/).
 
@@ -63,6 +67,7 @@ That probably won't be a good idea to inline your private access token right her
 
 Then let's create a fetch wrapper so that it's all safely typed.
 > Remember, all of this is executed on server side in fresh
+> 
 ```typescript
 export class Octoblog {
   private static get<T extends Endpoint>(endpoint: T): Promise<ResponseType<T>> {
