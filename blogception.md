@@ -232,3 +232,5 @@ Well, was it worth it ? <br>
 Why not. <br>
 Is it optimized ? <br>
 I probably don't think so. Having a limited amount of files in a repo is fine but since we are doing 2 fetch requests for each files, it can be limiting for sure.
+
+You can see the source of this very blog implementing this logic on this repo : [coding-room](https://github.com/brtheo/coding-room)
