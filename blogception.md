@@ -25,7 +25,7 @@ So, now that's it's clearer in our head let's summarize what we are going to do 
 
 ## The Github part 
 First thing first when it comes to external API, let's grab ourselves a key to authenticate our requests, for github you'll be able to generate one [here](https://github.com/settings/tokens?type=beta).
-![github token permissions](assets/blogception/permissions.png) You can refine the token accesses or just checking every permissions it's up to you. 
+You can refine the token accesses or just checking every permissions it's up to you. 
 
 Then let's create a new repo, I simply named it `blog`. Create a basic `.md` file and we are good for now.
 
@@ -88,5 +88,147 @@ We will need to hit 3 different endpoints for this : <br>
 <br>
 `/git/trees` used to list all files in a repo
 
+```typescript
+type GITBRANCH = "master" | "dev";
 
+const CONTENT = 
+  ".../contents/" as const;
 
+const COMMIT = 
+  `.../commits?sha=${GITBRANCH}&path=` as 
+  `.../commits?sha=${GITBRANCH}&path=`;
+
+const TREE = 
+  `.../git/trees/${GITBRANCH}` as 
+  `.../git/trees/${GITBRANCH}`;
+
+const ENDPOINTS = {CONTENT, COMMIT, TREE} as const;
+type Endpoint = typeof ENDPOINTS[keyof typeof ENDPOINTS];
+
+type EndpointResponseMap = {
+  "../contents/": IContent;
+  "../commits?sha=dev&path=": ICommit | ICommit[];
+  "../commits?sha=master&path=": ICommit | ICommit[];
+  "../git/trees/master": ITree;
+  "../git/trees/dev": ITree;
+};
+
+type ResponseType<T extends Endpoint> = T extends keyof EndpointResponseMap
+  ? EndpointResponseMap[T]
+  : unknown;
+```
+That was a lot of boilerplate but necessary ... hold on we're not done yet. We need to define each response types `IContent`, `ICommit` and `ITree`. But luckily for us there's a handy tool to generate a typescript interface based on a json that exists : [quicktype](https://quicktype.io/typescript).
+
+And since we're at it, let's define our `IPost` interface, the actual representation of a blog post in the context of our app.
+
+```typescript
+export interface IPost {
+  slug: string;
+  title: string;
+  publishedAt: number;
+  content: string;
+  author: string;
+} 
+```
+
+Okay, really we're done with types now.
+
+Let's create implement a new method in our `Octoblog` class to get one post in a repo by its slug.
+
+```ts
+public static async getAllPosts(): Promise<IPost[]> {
+    const treeElements: TreeElement[] = (await Octoblog.get(ENDPOINTS.TREE)).tree;
+    return (await Promise.all(
+      treeElements.map( treeElement => Octoblog.getPost(treeElement.path))
+    )).sort((postA, postB) => postB.publishedAt - postA.publishedAt);
+  }
+```
+Here we use our fetch wrapper we created earlier `get()` to make a request to the `TREE` endpoint, resolving all the promises returned by `getPost()` (soon) and returning this awaited array of `IPost` ordered by publishing date.
+
+To get a post we need to merge datas we get from two different responses, `ICommit` and `IContent`. To execute them at the same time let's create a helper function around our `get()` in order to do that.
+
+```ts
+//yes I lied, another type..
+type Param<T> = {
+  endpoint: T;
+  params?: {
+    slug?:string
+  }
+}
+//helper method to do more than one request at a time
+private static async getSeveral<T extends Endpoint>(param: Array<Param<T>>): Promise<Array<ResponseType<T>>>{
+    return await Promise.all(param.map(req => Octoblog.get(req.endpoint, req.params)));
+  }
+
+public static async getPost(slug: string): Promise<IPost> {
+    const [commitForPost, contentForPost] = await Octoblog.getSeveral([
+      {
+        endpoint: ENDPOINTS.COMMIT,
+        params: {slug}
+      },
+      {
+        endpoint: ENDPOINTS.CONTENTS,
+        params: {slug}
+      },
+    ]);
+    return Octoblog.makePost((contentForPost as IContent), (commitForPost as Array<ICommit>), slug);
+  }
+```
+
+Finally we need this other helper function `makePost()` to wrap up the `IPost` object creation.
+
+```ts
+  private static makePost(contentObject: IContent, commits: Array<ICommit>, slug: string): IPost{
+    slug = slug.replace('.md','');
+    const title = slug.replaceAll('-',' ');
+    const makeDate = (index = -1) => new Date((commits.at(index)?.commit.author.date as Date)).getTime();
+    const content = Base64.fromBase64String(contentObject.content).toString();
+    const author = commits.at(-1)?.committer.login;
+    return {
+      slug,
+      title,
+      publishedAt: makeDate(),
+      content, 
+      author // possibly here we can add more fields to IPost like authorPicture or lastUpdatedAt contained in ICommit
+    } as IPost
+  }
+```
+
+## Results ! 
+And that's it ... *Almost* 
+<br>
+At least on the github api operations side. We still need to display these beautiful posts to our UI.
+
+So, in Fresh the implementation would look like that, but you can easily figure out how to integrate it with your framework of choice.
+```tsx
+// routes/blog/index.tsx
+export const handler: Handlers<IPost[]> = {
+  async GET(_req, ctx) {
+    const posts = await Octoblog.getAllPosts()
+    return ctx.render(posts as IPost[])
+  }
+}
+
+// And simple define our page component in TSX as Fresh uses Preact to render UI
+export default function Blog(props: PageProps<IPost[]>) {
+  const posts = props.data;
+  return (
+    <>
+      <Head>
+        <title>My octoblog</title>
+      </Head>
+      <main>
+        {posts.map(post => <Post post={post}/>)}
+      </main>
+    </>
+  );
+}
+```
+
+And voilà, really DONE.
+
+## Conclusion
+Well, was it worth it ? <br>
+Why not. <br>
+Is it optimized ? <br>
+I probably don't think so. Having a limited amount of files in a repo is fine but since we are doing 2 fetch requests for each files, it can be limiting for sure.
