@@ -63,7 +63,7 @@ That probably won't be a good idea to inline your private access token right her
 
 Then let's create a fetch wrapper so that it's all safely typed.
 > Remember, all of this is executed on server side in fresh
-```ts
+```typescript
 export class Octoblog {
   private static get<T extends Endpoint>(endpoint: T): Promise<ResponseType<T>> {
     const data = await fetch(endpoint, {
@@ -76,14 +76,12 @@ export class Octoblog {
 
 Ok, the idea here is simple : we will define the `Endpoint` type and based on which endpoints we queried, we will receive a proper `ResponseType`.
 
-We will need to hit 3 different endpoints for this : 
-/contents
-: k
-`/commits`
-:
-`/git/trees`
-:
-
+We will need to hit 3 different endpoints for this : <br> 
+`/contents` used to get base64 string of a file
+<br>
+`/commits` usedd to get metadata like commit date and author
+<br>
+`/git/trees` used to list all files in a repo
 
 
 
