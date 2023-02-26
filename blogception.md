@@ -200,7 +200,7 @@ And that's it ... *Almost*
 At least on the github api operations side. We still need to display these beautiful posts to our UI.
 
 So, in Fresh the implementation would look like that, but you can easily figure out how to integrate it with your framework of choice.
-```tsx
+```ts
 // routes/blog/index.tsx
 export const handler: Handlers<IPost[]> = {
   async GET(_req, ctx) {
