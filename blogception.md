@@ -77,12 +77,12 @@ export class Octoblog {
 Ok, the idea here is simple : we will define the `Endpoint` type and based on which endpoints we queried, we will receive a proper `ResponseType`.
 
 We will need to hit 3 different endpoints for this : 
-`/contents`
-: kk
+/contents
+: k
 `/commits`
-: ll
+:
 `/git/trees`
-: ll
+:
 
 
 
