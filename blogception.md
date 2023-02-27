@@ -209,7 +209,7 @@ export const handler: Handlers<IPost[]> = {
   }
 }
 
-// And simple define our page component in TSX as Fresh uses Preact to render UI
+// And simply define our page component in TSX as Fresh uses Preact to render UI
 export default function Blog(props: PageProps<IPost[]>) {
   const posts = props.data;
   return (
