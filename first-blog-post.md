@@ -1,5 +1,7 @@
----toml
-tags = ['css', ':has']
+---
+tags: 
+  - css
+  - :has
 ---
 ## New css `:has()` pseudo-class, a concrete use case
 As demonstrated on this website's nav menu, we can achieve a very cool hover effect by using only few lines of css with the new `:has()` pseudo-class.
