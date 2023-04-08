@@ -4,7 +4,6 @@ tags:
   - rustlings
   - go
   - golings
-  - modern language
 ---
 
 As a developer the learning process of a new language is often tedious.
