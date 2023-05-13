@@ -169,3 +169,38 @@ export default class myComponent extends useAccountFields(LightningElement, fiel
 ```
 
 Hope this helps ! 
+
+## UPDATE 
+
+The way we wrote the mixin classes `useAccountRecords` or `useCaseRecords` is still very imperative.
+Instead we can think of a way to make it more generic like so 
+```typescript
+export function useRecordFields(genericConstructor, {recordId, fields}) {
+  const {objectApiName} = fields[0];
+  class placeholder extends genericConstructor {
+    @wire(getRecord, {recordId: '$recordId', fields: fields})
+    _fields
+  }
+  Object.defineProperty(placeholder.prototype, objectApiName, {
+      get() {
+        return Object.fromEntries(fields.map((field) => {
+          return [field.fieldApiName, getFieldValue(this._fields.data, field)]
+        }))
+      }
+  });  
+  return placeholder;
+}
+```
+
+Here on line 2, we are grabbing the `objectApiName` prop from the first element of our fields array we provided as a parameter of our mixin, giving us the `string` value of the SObject it belongs to.
+
+When you import a field in LWC it has this shape, imagine we're in typescript
+```typescript
+type SObjectField = {
+  fieldApiName: string; // => Id/LastModifiedDate/CustomField__c/whatever...
+  objectApiName: string; // => Case/Quote/CustomObject__c/whatever...
+}
+```
+
+So that then we can use `Object.defineProperty()` on the prototype of our placeholder class to dynamically create a getter whose `key` will be this `objectApiName`.  
+
