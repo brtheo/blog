@@ -1,7 +1,6 @@
 ---
 tags: 
   - rust
-  - pattern-matching
   - javascript
   - jsdoc
   - js
