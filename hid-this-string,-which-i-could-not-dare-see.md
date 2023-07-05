@@ -8,7 +8,7 @@ tags:
 When learning about a new technology and understanding its advantages and ingenuity over what you were previously used to, you kinda feel the urge to use your new super powers all over the place.
 
 A good example for me is the really clever approach the Rust language took with its pattern matching oriented syntax. 
-```rust
+```rs
 match time_of_day {
   1..=21 => Some(5),
   22 ..= 24 => Some(0),
