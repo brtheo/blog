@@ -44,7 +44,7 @@ Deno.serve((req: Request) => routeMatching(req, {
 }));
 ```
 Here we've set the 4 routes needed for our app. 
-But for now, the only thing you'll see would be that big *HELLO WORLD* in tiny 16px font size on a white background.
+But for now, the only thing you'll see will be that big *HELLO WORLD* in tiny 16px font size on a white background.
 ![light mode](https://media.tenor.com/p0FDLRJ5x3MAAAAC/light-theme.gif)
 
 So let's take care of our UI. 
