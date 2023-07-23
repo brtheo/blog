@@ -5,23 +5,23 @@ tags:
   - typescript
   - javascript
 ---
-With all the hype surrounding htmx lately and its clever way to do something, we were already doing 10~15 years ago, in a way that simply looked like cheating, I quickly hopped on the train and off I go to learn some black magic on the way.
+With all the hype surrounding `HTMX` lately and its clever way to do something, we were already doing 10~15 years ago, in a way that simply looked like cheating, I quickly hopped on the train and off I go to learn some black magic on the way.
 ![adava kedavra](https://media.tenor.com/yhFq6N5tvUEAAAAC/avada-kadavra-star-wars.gif)
-## DLHX
-Stands for <s>stop naming tech product by its acronym</s> **D**eno **L**ightsaber **H**tm**X**
+## DHX
+Stands for <s>stop naming tech product by its acronym</s> **D**eno **H**tm**X**
 
 Sounds fun right ?
 
-So that's it for the stack. As for the data persistency I'll stick to Deno's Web Storage API as their really promising KV database is under closed test.
+So that's it for the stack. As for the data persistency I'll stick to Deno's Web Storage API as [their really promising KV database](https://deno.com/kv) is under closed test.
 
-Quick recap about HTMX for those who slept in class.
+Quick recap about [`HTMX`](https://htmx.org/) for those who slept in class.
 
-HTMX is offering a declarative syntax that lets you write app logic inside your markup. The reactivity is done through case-by-case replacement of HTML content received through ajax call to the server.
+`HTMX` is offering a declarative syntax that lets you write app logic inside your markup. The reactivity is done through case-by-case replacement of HTML content received through ajax call to the server.
 
 ## Foundation
-To test the capabilities of HTMX I'll implement a basic TODO App.
+To test the capabilities of `HTMX` I'll implement a basic TODO App.
 
-Let's start by creating a server.ts file where we'll centralize the route handling.
+Let's start by creating a `server.ts` file where we'll centralize the route handling.
 ```typescript
 interface Routes {
   [routeName: string]: (req: Request) => Response | Promise<Response>
@@ -48,19 +48,31 @@ But for now, only you'll see would be that big *HELLO WORLD* in tiny 16px font s
 ![light mode](https://media.tenor.com/p0FDLRJ5x3MAAAAC/light-theme.gif)
 
 So let's take care of our UI. 
-And we'll do that with the module `deno_html` that lets you write your views using ES6 string templating syntax.
+And we'll do that with the module [`deno_html`](https://deno.land/x/html@v1.2.0) that lets you write your views using ES6 string templating syntax.
 
 So I'm gonna create a new file called `index.html.ts`
 ```typescript
 import { html } from "https://deno.land/x/html/mod.ts";
-export default html`
+export default html/*html*/`
   <!DOCTYPE html>
   <html lang="en">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DLHX</title>
+    <title>DHX</title>
     <script src="https://unpkg.com/htmx.org@1.9.3"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+      :root{
+        zoom: 150%; 
+        background: #242424;
+        color: white;
+        font-family: 'Open Sans'
+      }
+      .completed {
+        text-decoration:line-through;
+      }
+    </style>
   </head>
   <body>
     <ul id="todolist"></ul>
@@ -72,6 +84,10 @@ export default html`
   </html>
 `
 ```
-Here's our basic UI.
+Here's our basic UI that looks like this : 
+![basic ui](https://brtheo.dev/blog-pictures/dhx-basic-ui.png)
 
-> Note that I've already included HTMX, a simple script tag is needed
+> Note that I've already included HTMX, a simple script tag is needed> 
+
+
+## 
