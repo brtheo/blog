@@ -37,7 +37,7 @@ To build a file system based routing solution, we have to respect a certain hier
 └── wails.json
 ```
 This is roughly what we have and how we want it to behave.
-Notice the folder `pages`, this is effectively the root of our router. Any `index.ts` file present in the root of a folder should contain a `lit` component that will be rendered when the current URL matches against an a [URL Pattern](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API) Object generated in our Go App.
+Notice the folder `pages`, this is effectively the root of our router. Any `index.ts` files present in the root of a folder should contain a `lit` component that will be rendered when the current URL matches against a [URL Pattern](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API) Object generated in our Go App.
 Nested routes and named parameters are supported as demonstrated with the path `/editor/sub/:id` mapped to `/pages/editor/sub/[id].ts`.
 
 Ok let's begin.
@@ -68,7 +68,7 @@ declare global {
 }
 ```
 
-Then let's define our routes... Hold on, go has to do that right ?
+Then let's define our routes... Hold on, Go has to do that right ?
 
 Correct, so let's create a `GetRoutes()` function in `App.go` that we will import in our `routes.conf.ts` file.
 
@@ -90,7 +90,7 @@ func (a *App) GetRoutes() (routes []Route) {
 }
 ```
 
-Notice the `recursiveRoute()` function meaningful in our case to handle these types of route `/pages/sub/:id`.
+Notice the `recursiveRoute()` function, meaningful in our case to handle these type of routes `/pages/sub/:id`.
 
 ```go
 func recursiveRoute(path, pathPrefix string, routesMap map[string][]string, routes []string) (map[string][]string, []string) {
@@ -145,7 +145,7 @@ func transformTo[Type, ReturnType any] (data []Type, f func(Type, string) Return
 	return
 }
 ```
-We then allocate the `routes` array to the `routesMap` indexed by the current path and what is left to be done is simple re calling the `recursiveRoute()` function before returning a complete result.
+We then allocate the `routes` array to the `routesMap` indexed by the current path and what is left to be done is simply re-calling the `recursiveRoute()` function before returning a complete result.
 ```go
 routesMap[pathPrefix] = routes
 var tempMap map[string][]string
@@ -171,7 +171,7 @@ return routesMap, routes
   ]
 }
 ```
-But the `lit-router` package expect us to provide a route in this format 
+But the `lit-router` package expects us to provide a route in this format 
 ```typescript
 interface BaseRouteConfig {
   name?: string | undefined;
@@ -184,7 +184,7 @@ interface BaseRouteConfig {
 }
 ```
 
-We first initialize an empty struct `Route`, let's make it more relevant so that it'll provide an easy and effective api to work with on the JS side.
+We first initialized an empty struct `Route`, let's make it more relevant so that it'll provide an easy and effective api to work with on the JS side.
 
 ```go
 type Route struct {
