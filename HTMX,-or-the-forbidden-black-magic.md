@@ -344,4 +344,4 @@ Only thing left would be to throw a fully customized UI using TailwindCSS at it 
 Joke aside, I really see a future where we would only write frontend logic in the HTML directly. 
 
 Feel free to look at the code on my [github](https://github.com/brtheo/dhx).
-Bye 🙋
+Bye 🙋 :wave: :bye:
