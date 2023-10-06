@@ -195,8 +195,8 @@ export function $Todo(todo: Todo) {
   return html`
     <li>  
       <span id="todo-${todo.id}">${todo.todoName}</span>
-      <button name=${todo.id}>👌</button>
-      <button name=${todo.id}>❌</button>   
+      <button name=${todo.id}>:OK_hand:</button>
+      <button name=${todo.id}>:cross_mark:</button>   
     </li>
   `
 }
@@ -311,7 +311,7 @@ You know the way already
     hx-swap="none"
     _="on htmx:afterRequest remove 
     #row-${todo.id}"
-  >❌</button>
+  >:cross_mark:</button>
 ...
 ```
 ```typescript
@@ -344,4 +344,4 @@ Only thing left would be to throw a fully customized UI using TailwindCSS at it 
 Joke aside, I really see a future where we would only write frontend logic in the HTML directly. 
 
 Feel free to look at the code on my [github](https://github.com/brtheo/dhx).
-Bye 🙋
+Bye :waving_hand:

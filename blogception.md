@@ -10,7 +10,7 @@ There's several ways of creating a blog nowadays, whether it is with a legacy CM
 Bref, there're plenty of solutions.
 
 ## Why not build it ourselves ?
-I know right, I had the same idea 🤓
+I know right, I had the same idea :nerd_face:
 
 I wanted a solution that would be CMS-like, with automatic time tracking of blog post creation/edition possibility of several authors and easy content management.
 
