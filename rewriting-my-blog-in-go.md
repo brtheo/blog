@@ -21,12 +21,12 @@ To get a bit more familiar whit those technologies I thaught that it could be a 
 # Okay, Go is basically a better TypeScript
 ![](https://brtheo.dev/blog-pictures/golang.jpg)
 
-So, a while ago, [I wrote about how I implemented my blog](https://brtheo.dev/blog/blogception) relying solely on the Github API to fetch articles and metadata associated with them, stored in a repo as `.md ` files. It was done in [Deno](https://deno.land) and the rendering was done through their framework, [fresh]([https.sh](https://fresh.deno.dev/)).
+So, a while ago, [I wrote on how I implemented my blog](https://brtheo.dev/blog/blogception) relying solely on the Github API to fetch articles and metadata associated with them, stored in a repo as `.md ` files. It was done in [Deno](https://deno.land) and the rendering was done through their framework, [fresh]([https.sh](https://fresh.deno.dev/)).
 And then as a proof of concept I rewrote the whole thing using [Bun](https://bun.sh) in a ['server event driven'](https://github.com/brtheo/ServerWebComponent-htmx-lit-bun-elysia) way, by mixing server side rendering of `Lit` WebComponents and the use of `HTMX`.
 
 But you know, as a developer, you're always eager to learn and make new things right ? 
 
-So yeah, I had a pretty strong basis to itterate on, for this new `Go` version of my blog. 
+So yeah, I had a pretty strong basis to itterate on for this new `Go` version of my blog. 
 
 The first goal was to port the Github API wrapper I wrote in `TypeScript` to `Go`, and that's on which topic this article will focus on (the whole templ + HTMX rendering part might come in the future).
 
