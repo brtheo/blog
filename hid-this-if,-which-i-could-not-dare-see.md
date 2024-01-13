@@ -4,7 +4,6 @@ tags:
   - javascript
   - jsdoc
   - js
-  - salesforce
 ---
 When learning about a new technology and understanding its advantages and ingenuity over what you were previously used to, you kinda feel the urge to use your new super powers all over the place.
 

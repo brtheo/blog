@@ -76,17 +76,17 @@ Correct, so let's create a `GetRoutes()` function in `App.go` that we will impor
 type Route struct {}
 
 func (a *App) GetRoutes() (routes []Route) {
-	wd, err := os.Getwd()
-	check(err)
+  wd, err := os.Getwd()
+  check(err)
 
-	routesMap := make(map[string][]string)
-	routesArr := make([]string, 0)
+  routesMap := make(map[string][]string)
+  routesArr := make([]string, 0)
 
-	routesMap, routesArr = recursiveRoute(filepath.Join(wd, "frontend", "src", "pages"), string(os.PathSeparator), routesMap, routesArr)
+  routesMap, routesArr = recursiveRoute(filepath.Join(wd, "frontend", "src", "pages"), string(os.PathSeparator), routesMap, routesArr)
 
-	routes = makeRoutes(routesMap)
-	fmt.Println(routes)
-	return
+  routes = makeRoutes(routesMap)
+  fmt.Println(routes)
+  return
 }
 ```
 
@@ -94,9 +94,9 @@ Notice the `recursiveRoute()` function, meaningful in our case to handle these t
 
 ```go
 func recursiveRoute(path, pathPrefix string, routesMap map[string][]string, routes []string) (map[string][]string, []string) {
-	entries, err := os.ReadDir(path)
-	check(err)
-	dirs := strings.Split(path, string(os.PathSeparator))
+  entries, err := os.ReadDir(path)
+  check(err)
+  dirs := strings.Split(path, string(os.PathSeparator))
 }
 ```
 First we read the entries in the specified path and create a `dirs` Array.
@@ -110,11 +110,11 @@ routes = mapTo(entries, fs.DirEntry.Name)
 Then, if we're not at the root `/pages` we go deeper in the folder and we begin to append in the `routes` array using a handy util method `mapTo()`
 ```go
 func mapTo[Type, ReturnType any] (data []Type, f func(Type) ReturnType) (res []ReturnType) {
-	res = make([]ReturnType, 0, len(data))
-	for _, e := range data {
-		res = append(res, f(e))
-	}
-	return
+  res = make([]ReturnType, 0, len(data))
+  for _, e := range data {
+    res = append(res, f(e))
+  }
+  return
 }
 ```
 
@@ -126,23 +126,23 @@ routes = transformTo(routes, strings.TrimSuffix, ".ts")
 So, again let's create those util methods :
 ```go
 func filterWithOpt[Type any] (data []Type, f func(Type, string) bool, opt string) (res []Type, res2 []Type) {
-	res = make([]Type, 0, len(data))
-	res2 = make([]Type, 0, len(data))
-	for _, e := range data {
-		if f(e, opt) {
-			res = append(res, e)
-		} else {
-			res2 = append(res2, e)
-		}
-	}
-	return
+  res = make([]Type, 0, len(data))
+  res2 = make([]Type, 0, len(data))
+  for _, e := range data {
+    if f(e, opt) {
+      res = append(res, e)
+    } else {
+      res2 = append(res2, e)
+    }
+  }
+  return
 }
 func transformTo[Type, ReturnType any] (data []Type, f func(Type, string) ReturnType, opt string) (res []ReturnType) {
-	res = make([]ReturnType, 0, len(data))
-	for _, e := range data {
-		res = append(res, f(e, opt))
-	}
-	return
+  res = make([]ReturnType, 0, len(data))
+  for _, e := range data {
+    res = append(res, f(e, opt))
+  }
+  return
 }
 ```
 We then allocate the `routes` array to the `routesMap` indexed by the current path and what is left to be done is simply re-calling the `recursiveRoute()` function before returning a complete result.
@@ -189,9 +189,9 @@ We first initialized an empty struct `Route`, let's make it more relevant so tha
 ```go
 type Route struct {
   Component string // HTML Tag name
-	Path      string // URL to reached to display the component
-	Filename  string // URL of the component's file needed for its dynamic import
-	Args      bool // Custom Element's attribute (reflects the param routes)
+  Path      string // URL to reached to display the component
+  Filename  string // URL of the component's file needed for its dynamic import
+  Args      bool // Custom Element's attribute (reflects the param routes)
 }
 ```
 With this established we can start writing some TS in the `routes.conf.ts` to map our Go `Route` struct to an expected `BaseRouteConfig` typescript type.
@@ -222,40 +222,40 @@ The logic is there in place, we can finish up the Go side of the code by impleme
 func makeRoutes(m map[string][]string) (routes []Route) {
   routes = make([]Route, 0)
   for dir, files := range m {
-		for i := 0; i <= len(files)-1; i++ {
-			file := files[i]
-			file = strings.TrimPrefix(file, string(os.PathSeparator))
-			cmp := file
-			args := false
-			path := dir
-			if strings.HasSuffix(dir, string(os.PathSeparator)) && len(dir) > 1 {
-				path = strings.TrimSuffix(dir, string(os.PathSeparator))
-			}
-			if len(strings.Split(dir, string(os.PathSeparator))) > 2 {
-				dirs := strings.Split(dir, string(os.PathSeparator))
-				cmp = dirs[len(dirs)-2]
+    for i := 0; i <= len(files)-1; i++ {
+      file := files[i]
+      file = strings.TrimPrefix(file, string(os.PathSeparator))
+      cmp := file
+      args := false
+      path := dir
+      if strings.HasSuffix(dir, string(os.PathSeparator)) && len(dir) > 1 {
+        path = strings.TrimSuffix(dir, string(os.PathSeparator))
+      }
+      if len(strings.Split(dir, string(os.PathSeparator))) > 2 {
+        dirs := strings.Split(dir, string(os.PathSeparator))
+        cmp = dirs[len(dirs)-2]
         // map /some/[id].ts to /some/:id 
-				if strings.Contains(file, "[") {
-					formatedFileName := ReplaceDynamicPattern(file)
-					path += string(os.PathSeparator) + formatedFileName
-					args = true
-				}
-			}
-      // Route object creation
-			r := Route{
-				cmp + "-page",
-				strings.ReplaceAll(path, string(os.PathSeparator), "/"),
-				strings.ReplaceAll(dir+file, string(os.PathSeparator), "/"),
-				args,
-			}
-			routes = append(routes, r)
-		}
+        if strings.Contains(file, "[") {
+          formatedFileName := ReplaceDynamicPattern(file)
+          path += string(os.PathSeparator) + formatedFileName
+          args = true
 	}
-	return
+      }
+      // Route object creation
+      r := Route{
+        cmp + "-page",
+        strings.ReplaceAll(path, string(os.PathSeparator), "/"),
+        strings.ReplaceAll(dir+file, string(os.PathSeparator), "/"),
+        args,
+      }
+      routes = append(routes, r)
+    }
+  }
+  return
 }
 func ReplaceDynamicPattern(input string) string {
-	re := regexp.MustCompile(`\[(\w+)\]`)
-	return re.ReplaceAllString(input, ":$1")
+  re := regexp.MustCompile(`\[(\w+)\]`)
+  return re.ReplaceAllString(input, ":$1")
 }
 ```
 
