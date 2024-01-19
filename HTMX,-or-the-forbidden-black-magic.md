@@ -15,7 +15,7 @@ Sounds fun right ?
 So that's it for the stack. As for the data persistency I'll stick to Deno's Web Storage API as [their really promising KV database](https://deno.com/kv) is under closed test.
 
 Quick recap about [`HTMX`](https://htmx.org/) for those who slept in class.
-
+<lets-try>hello</lets-try>
 `HTMX` is offering a declarative syntax that lets you write app logic inside your markup. The reactivity is done through case-by-case replacement of HTML content received through ajax call to the server.
 
 ## Foundation
