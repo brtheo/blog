@@ -74,7 +74,7 @@ So,
 
 
 Let's say for the UI we have a an LWC using a `<lightning-datatable` to display data coming from an apex method that returns SOQL results like so : 
-```java
+```apex
 public static with sharing class SomeController {
   @AuraEnabled(cacheable=true)
   public static SomeObject__c[] getAllData() {
@@ -110,7 +110,7 @@ For whatever reason, while active for the salesman users, this restriction rules
 The fix was quit simple actually, we just needed to think about it.
 
 We first replaced the restriction rules with a scoping rules, evaluating basically the same condition and then had to update our SOQL query with the following statement `USING SCOPE scopingRule`
-```java
+```apex
 public static with sharing class SomeController {
   @AuraEnabled(cacheable=true)
   public static SomeObject__c[] getAllData() {
