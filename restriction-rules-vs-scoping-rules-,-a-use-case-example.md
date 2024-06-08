@@ -65,7 +65,7 @@ Indeed, [restriction rules](https://help.salesforce.com/s/articleView?id=sf.secu
 
 Before chosing which one will help with what we want to achieve, let's redefine our goal.
 
-![visibility model](https://raw.githubusercontent.com/brtheo/blog/dev/visibilitymodel.png?token=GHSAT0AAAAAACRYFTY57USOG7JZXKCRBLQOZTEMEMQ)
+![visibility model](https://github.com/brtheo/blog/blob/dev/visibilitymodel.png?raw=true)
 
 So, 
 1. Salesman XY, as a physical user, has 2 technical users that belongs to dealership X and Y. As it's the same user, he needs to keep track of his records regardless of the current technical user he's connected with. 
