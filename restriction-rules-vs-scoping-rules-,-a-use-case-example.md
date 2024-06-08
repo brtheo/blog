@@ -65,7 +65,7 @@ Indeed, [restriction rules](https://help.salesforce.com/s/articleView?id=sf.secu
 
 Before chosing which one will help with what we want to achieve, let's redefine our goal.
 
-![visibility model](https://github.com/brtheo/blog/blob/dev/visibilitymodel.png?raw=true)
+![visibility model](https://raw.githubusercontent.com/brtheo/blog/dev/visibilitymodel.png)
 
 So, 
 1. Salesman XY, as a physical user, has 2 technical users that belongs to dealership X and Y. As it's the same user, he needs to keep track of his records regardless of the current technical user he's connected with. 
@@ -74,7 +74,7 @@ So,
 
 
 Let's say for the UI we have a an LWC using a `<lightning-datatable` to display data coming from an apex method that returns SOQL results like so : 
-```apex
+```java
 public static with sharing class SomeController {
   @AuraEnabled(cacheable=true)
   public static SomeObject__c[] getAllData() {
@@ -110,7 +110,7 @@ For whatever reason, while active for the salesman users, this restriction rules
 The fix was quit simple actually, we just needed to think about it.
 
 We first replaced the restriction rules with a scoping rules, evaluating basically the same condition and then had to update our SOQL query with the following statement `USING SCOPE scopingRule`
-```apex
+```java
 public static with sharing class SomeController {
   @AuraEnabled(cacheable=true)
   public static SomeObject__c[] getAllData() {
