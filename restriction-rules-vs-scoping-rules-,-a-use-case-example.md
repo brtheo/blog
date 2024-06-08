@@ -13,7 +13,7 @@ In the context of a salesforce application, data visibility and user permissions
 
 And when the source of truth regarding visibility comes from an external system, implementing it in salesforce can quickly turn out to be tricky. 
 
-That's what we had to deal with at my job a while ago and you see how one wrong choice can lead to weird bugs and serious heaaches.
+That's what we had to deal with at my job a while ago and you see how one wrong choice can lead to weird bugs and serious headaches.
 
 ## Our data model and visibility system
 
