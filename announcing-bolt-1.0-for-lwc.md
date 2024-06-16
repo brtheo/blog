@@ -124,9 +124,9 @@ export default searchForm extends mix(
 
 In this, rather long but good introduction, of Bolt we can see the use of 
 * 3 mixins 
-  * [`useReactiveBinding`](https://brtheo.github.io/bolt/mixins/usereactivebinding/)
-  * [`useFormValidation`](https://brtheo.github.io/bolt/mixins/useformvalidation/)
-  * [`useState`](https://brtheo.github.io/bolt/mixins/usestate/)
+  1. [`useReactiveBinding`](https://brtheo.github.io/bolt/mixins/usereactivebinding/)
+  2. [`useFormValidation`](https://brtheo.github.io/bolt/mixins/useformvalidation/)
+  3. [`useState`](https://brtheo.github.io/bolt/mixins/usestate/)
   
 * Utility component [`<c-bolt-skeleton />`](https://brtheo.github.io/bolt/components/boltskeleton/)
 
@@ -178,8 +178,9 @@ export default class recordCreationForm extends mix(
 ```
 Here we can see the use of 
 * 2 mixins 
-  * [`useForm`](https://brtheo.github.io/bolt/mixins/useform/)
-  * [`useDML`](https://brtheo.github.io/bolt/mixins/usedml/)
+  1. [`useForm`](https://brtheo.github.io/bolt/mixins/useform/)
+  2. [`useDML`](https://brtheo.github.io/bolt/mixins/usedml/)
+  
 * The [`BoltElement`](https://brtheo.github.io/bolt/components/boltelement/) base class
 * Utility component [`<c-bolt-form />`](https://brtheo.github.io/bolt/components/boltform/)
 
