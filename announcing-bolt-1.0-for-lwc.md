@@ -127,6 +127,7 @@ In this, rather long but good introduction, of Bolt we can see the use of
   * [`useReactiveBinding`](https://brtheo.github.io/bolt/mixins/usereactivebinding/)
   * [`useFormValidation`](https://brtheo.github.io/bolt/mixins/useformvalidation/)
   * [`useState`](https://brtheo.github.io/bolt/mixins/usestate/)
+  
 * Utility component [`<c-bolt-skeleton />`](https://brtheo.github.io/bolt/components/boltskeleton/)
 
 **useReactiveBinding** lets you bind together one property of your class to one input, just by adding `[data-bind]` to the input and by referencing the `bind()` method to the `onchange` handler of the input.
