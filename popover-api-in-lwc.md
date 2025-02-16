@@ -129,7 +129,7 @@ get positionAnchor() {
 ```
 
 ## Adding animations
-To animate the entering and exiting state is by leveraging the new css rule `@starting-style` and the property `transition-behavior: allow-discrete`.
+To animate the entering and exiting state of our popover we'll leverage the new css rule `@starting-style` and the property `transition-behavior: allow-discrete`.
 
 You can add to the head of your community these styles:
 ```css
