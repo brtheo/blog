@@ -25,12 +25,12 @@ However, the LWC rendering engine will generate dynamically element's ID to ensu
 For example, if we write:
 
 ```html
-<button popovertarget="my-popover">Open Popover</button>
+<button id="myid">Open Popover</button>
 ```
 
 LWC will generate something like:
 ```html
-<button popovertarget="my-popover-1234">Open Popover</button>
+<button id="myid-1234">Open Popover</button>
 ```
 
 ## The Solution
