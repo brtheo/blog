@@ -202,7 +202,7 @@ export default class Popover extends LightningElement {
     </button>
   </template>
   <aside
-    style={anchorConsumer}
+    style={positionAnchor}
     id="popover"
     popover="manual">
     <slot></slot>
