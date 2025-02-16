@@ -129,7 +129,7 @@ get positionAnchor() {
 ```
 
 ## Adding animations
-To animate the entring and exiting state is by leveraging the new css rule `@starting-style` and the property `transition-behavior: allow-discrete`.
+To animate the entering and exiting state is by leveraging the new css rule `@starting-style` and the property `transition-behavior: allow-discrete`.
 
 You can add to the head of your community these styles:
 ```css
