@@ -16,6 +16,8 @@ So that's it for the stack. As for the data persistency I'll stick to Deno's Web
 
 Quick recap about [`HTMX`](https://htmx.org/) for those who slept in class.
 
+<lets-try>hello</lets-try>
+
 `HTMX` is offering a declarative syntax that lets you write app logic inside your markup. The reactivity is done through case-by-case replacement of HTML content received through ajax call to the server.
 
 ## Foundation
@@ -44,7 +46,7 @@ Deno.serve((req: Request) => routeMatching(req, {
 }));
 ```
 Here we've set the 4 routes needed for our app. 
-But for now, only you'll see would be that big *HELLO WORLD* in tiny 16px font size on a white background.
+But for now, the only thing you'll see would be that big *HELLO WORLD* in tiny 16px font size on a white background.
 ![light mode](https://media.tenor.com/p0FDLRJ5x3MAAAAC/light-theme.gif)
 
 So let's take care of our UI. 
@@ -344,4 +346,4 @@ Only thing left would be to throw a fully customized UI using TailwindCSS at it 
 Joke aside, I really see a future where we would only write frontend logic in the HTML directly. 
 
 Feel free to look at the code on my [github](https://github.com/brtheo/dhx).
-Bye 🙋
+Bye 🙋 🙋‍♂️
