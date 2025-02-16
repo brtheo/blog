@@ -1,5 +1,5 @@
 ---
-tags: 
+tags:
   - salesforce
   - lwc
   - javascript
@@ -9,7 +9,7 @@ We're all gonna agree on this, using `LWC` over `Aura` is way more enjoyable as 
 
 What's troublesome though, in my opinion, is the use of the functions `getFieldValue()` and `getRecord()`.
 
-Here's what's the [official doc](https://developer.salesforce.com/docs/component-library/documentation/en/lwc/reference_get_field_value) is saying : 
+Here's what's the [official doc](https://developer.salesforce.com/docs/component-library/documentation/en/lwc/reference_get_field_value) is saying :
 ```typescript
 import { LightningElement, api, wire } from 'lwc';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
@@ -97,7 +97,7 @@ And we using `Object.fromEntries` to simply convert the created `Map` into an ob
 Now, when referencing these values in the html or js, it'll be more readable to have somewhere in your code `Account.AnnualRevenue` compared to just `revenue` as it was presented on the official doc as now you have a direct clear view of what the data represents.
 
 ## Composition and reusability
-Imagine you have 50+ LWC in your project. Each needs to access datas on an object. 
+Imagine you have 50+ LWC in your project. Each needs to access datas on an object.
 Unless you're a fool you won't copy paste this code 50 times.
 
 So let's make it flexible.
@@ -147,11 +147,11 @@ export function useCaseFields(constructorLike, fields) {
 }
 ```
 
-Now inside your main component all you need to do is this 
+Now inside your main component all you need to do is this
 ```typescript
 import { LightningElement, api } from 'lwc';
 
-import AnnualRevenue from '@salesforce/schema/Account.AnnualRevenue'; 
+import AnnualRevenue from '@salesforce/schema/Account.AnnualRevenue';
 import CreatedDate from '@salesforce/schema/Account.CreatedDate';
 import SLAExpirationDate__c from '@salesforce/schema/Account.SLAExpirationDate__c';
 
@@ -168,4 +168,38 @@ export default class myComponent extends useAccountFields(LightningElement, fiel
 }
 ```
 
-Hope this helps ! 
+Hope this helps !
+
+## UPDATE
+
+The way we wrote the mixin classes `useAccountRecords` or `useCaseRecords` is still very imperative.
+Instead we can think of a way to make it more generic like so
+```typescript
+export function useRecordFields(genericConstructor, {recordId, fields}) {
+  const {objectApiName} = fields[0];
+  class placeholder extends genericConstructor {
+    @wire(getRecord, {recordId: '$recordId', fields: fields})
+    _fields
+  }
+  Object.defineProperty(placeholder.prototype, objectApiName, {
+      get() {
+        return Object.fromEntries(fields.map((field) => {
+          return [field.fieldApiName, getFieldValue(this._fields.data, field)]
+        }))
+      }
+  });
+  return placeholder;
+}
+```
+
+Here on line 2, we are grabbing the `objectApiName` prop from the first element of our fields array we provided as a parameter of our mixin, giving us the `string` value of the SObject it belongs to.
+
+When you import a field in LWC it has this shape, imagine we're in typescript
+```typescript
+type SObjectField = {
+  fieldApiName: string; // => Id/LastModifiedDate/CustomField__c/whatever...
+  objectApiName: string; // => Case/Quote/CustomObject__c/whatever...
+}
+```
+
+So that then we can use `Object.defineProperty()` on the prototype of our placeholder class to dynamically create a getter whose `key` will be this `objectApiName`.

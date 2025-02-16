@@ -1,5 +1,5 @@
 ---
-tags: 
+tags:
   - htmx
   - deno
   - typescript
@@ -15,8 +15,6 @@ Sounds fun right ?
 So that's it for the stack. As for the data persistency I'll stick to Deno's Web Storage API as [their really promising KV database](https://deno.com/kv) is under closed test.
 
 Quick recap about [`HTMX`](https://htmx.org/) for those who slept in class.
-
-<lets-try>hello</lets-try>
 
 `HTMX` is offering a declarative syntax that lets you write app logic inside your markup. The reactivity is done through case-by-case replacement of HTML content received through ajax call to the server.
 
@@ -45,11 +43,11 @@ Deno.serve((req: Request) => routeMatching(req, {
   '/create': async (req: Request) => {}
 }));
 ```
-Here we've set the 4 routes needed for our app. 
-But for now, the only thing you'll see would be that big *HELLO WORLD* in tiny 16px font size on a white background.
+Here we've set the 4 routes needed for our app.
+But for now, the only thing you'll see will be that big *HELLO WORLD* in tiny 16px font size on a white background.
 ![light mode](https://media.tenor.com/p0FDLRJ5x3MAAAAC/light-theme.gif)
 
-So let's take care of our UI. 
+So let's take care of our UI.
 And we'll do that with the module [`deno_html`](https://deno.land/x/html@v1.2.0) that lets you write your views using ES6 string templating syntax.
 
 So I'm gonna create a new file called `index.html.ts`
@@ -66,7 +64,7 @@ export default html`
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
       :root{
-        zoom: 150%; 
+        zoom: 150%;
         background: #242424;
         color: white;
         font-family: 'Open Sans'
@@ -99,10 +97,10 @@ Deno.serve((req: Request) => routeMatching(req, {
 }));
 ```
 
-Here's our basic UI that looks like this : 
+Here's our basic UI that looks like this :
 ![basic ui](https://brtheo.dev/blog-pictures/dhx-basic-ui.png)
 
-> Note that I've already included HTMX, a simple script tag is needed> 
+> Note that I've already included HTMX, a simple script tag is needed>
 
 ## Creating a Todo
 
@@ -113,12 +111,12 @@ Let's write the front-end logic first
 <ul id="todolist"></ul>
 <form >
   <input type="text" name="todo-name">
-  <button 
-    type="submit" 
-    hx-post="/create" 
-    hx-include="[name='todo-name']" 
-    hx-target="#todolist" 
-    hx-swap="beforeend"  
+  <button
+    type="submit"
+    hx-post="/create"
+    hx-include="[name='todo-name']"
+    hx-target="#todolist"
+    hx-swap="beforeend"
   >Create</button>
 </form>
 ```
@@ -144,11 +142,11 @@ Let's first define a simple `Todo` type.
 ```typescript
 const todosRef = localStorage.getItem('todos');
 
-export const todos: Array<Todo> = todosRef === null 
+export const todos: Array<Todo> = todosRef === null
   ? (_ => {
     localStorage.setItem('todos',JSON.stringify([]));
     return []
-  })() 
+  })()
   : JSON.parse(localStorage.getItem('todos')!);
 ```
 And here I define my array of todos read from the localStorage if it exists.
@@ -195,10 +193,10 @@ For the response we can easily figure that our, by creating a Todo *component* t
 //index.html.ts
 export function $Todo(todo: Todo) {
   return html`
-    <li>  
+    <li>
       <span id="todo-${todo.id}">${todo.todoName}</span>
-      <button name=${todo.id}>👌</button>
-      <button name=${todo.id}>❌</button>   
+      <button name=${todo.id}>:OK_hand:</button>
+      <button name=${todo.id}>:cross_mark:</button>
     </li>
   `
 }
@@ -211,10 +209,10 @@ return new Response(Todo(todo));
 ...
 ```
 
-Now upon clicking the create button it should reflect like that on the ui 
+Now upon clicking the create button it should reflect like that on the ui
 ![dhx-created](https://brtheo.dev/blog-pictures/dhx-todo.png)
 
-We're still missing one thing though, that is displaying our todos after a page refresh. Simple enough : 
+We're still missing one thing though, that is displaying our todos after a page refresh. Simple enough :
 ```html
 //index.html.ts
 import { todos } from "./todo.ts";
@@ -226,7 +224,7 @@ Okay now the second method, again let's focus on the frontend code first.
 
 ```html
 <span id="todo-${todo.id}">${todo.todoName}</span>
-<button 
+<button
   name=${todo.id}
   hx-put="/completed"
   hx-swap="none"
@@ -234,7 +232,7 @@ Okay now the second method, again let's focus on the frontend code first.
 ```
 *On the click event of the button, do an ajax put request to /completed that'll send the trigger target's name, then do nothing*
 
-As for the handling this request : 
+As for the handling this request :
 ```typescript
 //todos.ts
 export function completeTodo(id: Todo['id']) {
@@ -278,12 +276,12 @@ That perfectly suits our needs as HTMX will dispatch a bunch of custom events al
 </style>
 ...
 <span id="todo-${todo.id}">${todo.todoName}</span>
-<button 
+<button
   ...
-  _="on htmx:afterRequest toggle .completed on 
+  _="on htmx:afterRequest toggle .completed on
   #todo-${todo.id}"
 ```
-would translate to something like 
+would translate to something like
 ```typescript
 button.addEventListener('html:afterRequest', () => todoRef.classList.toggle('.completed'))
 ```
@@ -296,7 +294,7 @@ function classMap(input: string) {
   }[input] ?? ''
 }
 ...
- `<span 
+ `<span
   class=${classMap(todo.state)}
   id="todo-${todo.id}"
 >${todo.todoName}</span>`
@@ -311,9 +309,9 @@ You know the way already
     name=${todo.id}
     hx-put="/delete"
     hx-swap="none"
-    _="on htmx:afterRequest remove 
+    _="on htmx:afterRequest remove
     #row-${todo.id}"
-  >❌</button>
+  >:cross_mark:</button>
 ...
 ```
 ```typescript
@@ -343,7 +341,7 @@ Voilà !
 
 Only thing left would be to throw a fully customized UI using TailwindCSS at it and we're ready to call ourselves true *HTML DEVELOPER*.
 
-Joke aside, I really see a future where we would only write frontend logic in the HTML directly. 
+Joke aside, I really see a future where we would only write frontend logic in the HTML directly.
 
 Feel free to look at the code on my [github](https://github.com/brtheo/dhx).
-Bye 🙋 🙋‍♂️
+Bye :waving_hand:

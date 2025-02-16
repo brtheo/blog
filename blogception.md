@@ -23,9 +23,9 @@ So, now that's it's clearer in our head let's summarize what we are going to do 
 - Use Deno + Fresh
 - Implements type safety
 
-## The Github part 
+## The Github part
 First thing first when it comes to external API, let's grab ourselves a key to authenticate our requests, for github you'll be able to generate one [here](https://github.com/settings/tokens?type=beta).
-You can refine the token accesses or just checking every permissions it's up to you. 
+You can refine the token accesses or just checking every permissions it's up to you.
 
 Then let's create a new repo, I simply named it `blog`. Create a basic `.md` file and we are good for now.
 
@@ -67,7 +67,7 @@ That probably won't be a good idea to inline your private access token right her
 
 Then let's create a fetch wrapper so that it's all safely typed.
 > Remember, all of this is executed on server side in fresh
-> 
+>
 ```typescript
 export class Octoblog {
   private static get<T extends Endpoint>(endpoint: T): Promise<ResponseType<T>> {
@@ -81,7 +81,7 @@ export class Octoblog {
 
 Ok, the idea here is simple : we will define the `Endpoint` type and based on which endpoints we queried, we will receive a proper `ResponseType`.
 
-We will need to hit 3 different endpoints for this : <br> 
+We will need to hit 3 different endpoints for this : <br>
 `/contents` used to get base64 string of a file
 <br>
 `/commits` usedd to get metadata like commit date and author
@@ -91,15 +91,15 @@ We will need to hit 3 different endpoints for this : <br>
 ```typescript
 type GITBRANCH = "master" | "dev";
 
-const CONTENT = 
+const CONTENT =
   ".../contents/" as const;
 
-const COMMIT = 
-  `.../commits?sha=${GITBRANCH}&path=` as 
+const COMMIT =
+  `.../commits?sha=${GITBRANCH}&path=` as
   `.../commits?sha=${GITBRANCH}&path=`;
 
-const TREE = 
-  `.../git/trees/${GITBRANCH}` as 
+const TREE =
+  `.../git/trees/${GITBRANCH}` as
   `.../git/trees/${GITBRANCH}`;
 
 const ENDPOINTS = {CONTENT, COMMIT, TREE} as const;
@@ -128,7 +128,7 @@ export interface IPost {
   publishedAt: number;
   content: string;
   author: string;
-} 
+}
 ```
 
 Okay, really we're done with types now.
@@ -188,14 +188,14 @@ Finally we need this other helper function `makePost()` to wrap up the `IPost` o
       slug,
       title,
       publishedAt: makeDate(),
-      content, 
+      content,
       author // possibly here we can add more fields to IPost like authorPicture or lastUpdatedAt contained in ICommit
     } as IPost
   }
 ```
 
-## Results ! 
-And that's it ... *Almost* 
+## Results !
+And that's it ... *Almost*
 <br>
 At least on the github api operations side. We still need to display these beautiful posts to our UI.
 

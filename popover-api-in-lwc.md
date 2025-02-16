@@ -254,7 +254,7 @@ You can add
 
 Here's a demo of how it looks like in our own application:
 
-![popover api demo](Isolated.png "popover api lwc")
+![popover api demo](https://raw.githubusercontent.com/brtheo/blog/refs/heads/master/assets/popover-lwc.gif "popover api lwc")
 
 This implementation gives us a reusable popover component that:
 - Handles ID generation and linking automatically
